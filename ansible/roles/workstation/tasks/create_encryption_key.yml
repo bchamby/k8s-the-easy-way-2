@@ -1,0 +1,9 @@
+---
+- name: generate an encryption key
+  shell: head -c 32 /dev/urandom | base64
+  register: encryption_key
+
+- name: create encryption-config.yaml file
+  template:
+    src: roles/workstation/templates/encryption-config_raw.yaml
+    dest: roles/workstation/templates/encryption-config.yaml
