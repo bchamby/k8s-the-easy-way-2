@@ -1,0 +1,12 @@
+---
+- name: distribute files to worker nodes
+  copy:
+    src: "{{ item }}"
+    dest: /var/tmp
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - roles/worker/templates/kube-proxy.kubeconfig
+    - roles/worker/templates/{{ ansible_hostname }}.kubeconfig
+  become: true

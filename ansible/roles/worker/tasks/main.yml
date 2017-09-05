@@ -1,2 +1,3 @@
 ---
 - include: distribute_certs.yml
+- include: distribute_worker_files.yml
