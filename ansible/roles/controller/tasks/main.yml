@@ -1,3 +1,5 @@
 ---
 - include: distribute_certs.yml
 - include: distribute_enc_file.yml
+- include: install_etcd.yml
+- include: install_control_plane.yml

@@ -1,0 +1,7 @@
+---
+- name: Check whether etcd is already installed
+  stat:
+    path: /etc/systemd/system/etcd.service
+  register: etcd_installed
+- script: roles/controller/files/etcd.sh
+  when: etcd_installed.stat.exists == False
