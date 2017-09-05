@@ -140,3 +140,12 @@ resource "google_compute_forwarding_rule" "apiserver" {
   port_range = "6443"
   ip_address = "${google_compute_address.k8s-the-easy-way.address}"
 }
+
+resource "google_compute_route" "k8s-route" {
+  count       = 3
+  name        = "k8s-route-worker-${count.index}"
+  network     = "${google_compute_network.k8s-the-easy-way.name}"
+  dest_range  = "10.200.${count.index}.0/24"
+  next_hop_ip = "10.240.0.2${count.index}"
+  priority    = 1000
+}
