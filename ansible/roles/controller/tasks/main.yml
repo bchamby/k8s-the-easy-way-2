@@ -1,0 +1,2 @@
+---
+- include: distribute_certs.yml

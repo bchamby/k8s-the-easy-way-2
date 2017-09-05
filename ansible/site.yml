@@ -3,3 +3,13 @@
   hosts: localhost
   roles:
     - workstation
+
+- name: configure controller nodes
+  hosts: tag_controller
+  roles:
+    - controller
+
+- name: configure worker nodes
+  hosts: tag_worker
+  roles:
+    - worker

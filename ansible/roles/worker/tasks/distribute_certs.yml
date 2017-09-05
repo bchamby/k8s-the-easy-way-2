@@ -1,0 +1,17 @@
+---
+- name: distribute worker certs
+  copy:
+    src: "{{ item }}"
+    dest: /var/tmp
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - roles/common/templates/ca.pem
+    - roles/worker/templates/worker-0.pem
+    - roles/worker/templates/worker-0-key.pem
+    - roles/worker/templates/worker-1.pem
+    - roles/worker/templates/worker-1-key.pem
+    - roles/worker/templates/worker-2.pem
+    - roles/worker/templates/worker-2-key.pem
+  become: true

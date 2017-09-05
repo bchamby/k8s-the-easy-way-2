@@ -1,0 +1,14 @@
+---
+- name: distribute controller certs
+  copy:
+    src: "{{ item }}"
+    dest: /var/tmp
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - roles/common/templates/ca.pem
+    - roles/common/templates/ca-key.pem
+    - roles/controller/templates/kubernetes.pem
+    - roles/controller/templates/kubernetes-key.pem
+  become: true
