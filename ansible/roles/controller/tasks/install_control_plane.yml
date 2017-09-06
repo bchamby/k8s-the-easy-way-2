@@ -3,5 +3,7 @@
   stat:
     path: /etc/systemd/system/kube-apiserver.service
   register: controlplane_installed
-- script: roles/controller/files/controller.sh
+
+- name: Install control plane
+  script: roles/controller/files/controller.sh
   when: controlplane_installed.stat.exists == False
