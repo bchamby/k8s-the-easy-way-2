@@ -2,6 +2,7 @@
   stat:
     path: roles/common/templates/ca.pem
   register: ca_result
+
 - name: run command to generate CA cert and key
   shell: cfssl gencert -initca roles/workstation/templates/ca-csr.json | cfssljson -bare roles/common/templates/ca
   when: ca_result.stat.exists == False
@@ -10,6 +11,7 @@
   stat:
     path: roles/common/templates/admin.pem
   register: admin_result
+
 - name: run command to generate admin cert and key
   shell: cfssl gencert -ca=roles/common/templates/ca.pem -ca-key=roles/common/templates/ca-key.pem -config=roles/workstation/templates/ca-config.json -profile=kubernetes roles/workstation/templates/admin-csr.json | cfssljson -bare roles/common/templates/admin
   when: admin_result.stat.exists == False
@@ -17,6 +19,7 @@
 - name: get worker external IPs
   command: gcloud compute instances describe "{{ item }}" --format 'value(networkInterfaces[0].accessConfigs[0].natIP)'
   register: worker_external_ips
+  changed_when: false
   with_items:
     - worker-0
     - worker-1
@@ -30,6 +33,7 @@
 - name: get worker internal IPs
   command: gcloud compute instances describe "{{ item }}" --format 'value(networkInterfaces[0].networkIP)'
   register: worker_internal_ips
+  changed_when: false
   with_items:
     - worker-0
     - worker-1
@@ -52,18 +56,21 @@
   stat:
     path: roles/worker/templates/kube-proxy.pem
   register: kubeproxy_result
+
 - name: run command to generate kube-proxy cert and key
   shell: cfssl gencert -ca=roles/common/templates/ca.pem -ca-key=roles/common/templates/ca-key.pem -config=roles/workstation/templates/ca-config.json -profile=kubernetes roles/workstation/templates/kube-proxy-csr.json | cfssljson -bare roles/worker/templates/kube-proxy
   when: kubeproxy_result.stat.exists == False
 
 - name: get public static IP address for API server
   command: gcloud compute addresses describe k8s-the-easy-way --region us-central1 --format 'value(address)'
+  changed_when: false
   register: k8s_api_public_ip
 
 - name: check whether kubernetes cert and key already exist
   stat:
     path: roles/controller/templates/kubernetes.pem
   register: kubernetes_result
+
 - name: run command to generate kubernetes cert and key
   shell: cfssl gencert -ca=roles/common/templates/ca.pem -ca-key=roles/common/templates/ca-key.pem -config=roles/workstation/templates/ca-config.json -hostname=10.32.0.1,10.240.0.10,10.240.0.11,10.240.0.12,"{{ k8s_api_public_ip.stdout }}",127.0.0.1,kubernetes.default -profile=kubernetes roles/workstation/templates/kubernetes-csr.json | cfssljson -bare roles/controller/templates/kubernetes
   when: kubernetes_result.stat.exists == False
