@@ -25,11 +25,6 @@
     - worker-1
     - worker-2
 
-# - debug:
-#     msg: "{{ item.stdout }}"
-#   with_items:
-#     - "{{ worker_external_ips.results }}"
-
 - name: get worker internal IPs
   command: gcloud compute instances describe "{{ item }}" --format 'value(networkInterfaces[0].networkIP)'
   register: worker_internal_ips
