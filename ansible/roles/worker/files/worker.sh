@@ -60,9 +60,9 @@ RestartSec=10s
 WantedBy=multi-user.target
 EOF
 
-sudo mv /var/tmp/${HOSTNAME}-key.pem /var/tmp/${HOSTNAME}.pem /var/lib/kubelet/
-sudo mv /var/tmp/${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
-sudo mv ca.pem /var/lib/kubernetes/
+sudo cp /var/tmp/${HOSTNAME}-key.pem /var/tmp/${HOSTNAME}.pem /var/lib/kubelet/
+sudo cp /var/tmp/${HOSTNAME}.kubeconfig /var/lib/kubelet/kubeconfig
+sudo cp ca.pem /var/lib/kubernetes/
 
 cat > kubelet.service <<EOF
 [Unit]
@@ -97,7 +97,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-sudo mv /var/tmp/kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
+sudo cp /var/tmp/kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig
 
 cat > kube-proxy.service <<EOF
 [Unit]

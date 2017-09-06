@@ -6,7 +6,7 @@ wget https://storage.googleapis.com/kubernetes-release/release/v1.7.4/bin/linux/
 chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl
 sudo mv kube-apiserver kube-controller-manager kube-scheduler kubectl /usr/local/bin/
 sudo mkdir -p /var/lib/kubernetes/
-sudo mv /var/tmp/ca.pem /var/tmp/ca-key.pem /var/tmp/kubernetes-key.pem /var/tmp/kubernetes.pem /var/tmp/encryption-config.yaml /var/lib/kubernetes/
+sudo cp /var/tmp/ca.pem /var/tmp/ca-key.pem /var/tmp/kubernetes-key.pem /var/tmp/kubernetes.pem /var/tmp/encryption-config.yaml /var/lib/kubernetes/
 INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)
 
 cat > kube-apiserver.service <<EOF
