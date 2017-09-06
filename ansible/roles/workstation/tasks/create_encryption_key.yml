@@ -1,6 +1,12 @@
 ---
+- name: check whether encryption-config.yaml already exists
+  stat:
+    path: roles/workstation/templates/encryption-config.yaml
+  register: encconfig_result
+
 - name: generate an encryption key
   shell: head -c 32 /dev/urandom | base64
+  when: encconfig_result.stat.exists == False
   register: encryption_key
 
 - name: create encryption-config.yaml file
