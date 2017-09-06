@@ -9,3 +9,4 @@ cleanenv.sh
 *.kubeconfig
 gce.py
 gce.ini
+ansible/roles/workstation/templates/encryption-config.yaml
