@@ -1,16 +1,21 @@
 ---
 - name: get public static IP address for API server
   command: gcloud compute addresses describe k8s-the-easy-way --region us-central1 --format 'value(address)'
+  changed_when: false
   register: k8s_api_public_ip
 
 - name: generate kubeconfig file
+  changed_when: false
   shell: kubectl config set-cluster k8s-the-easy-way --certificate-authority=roles/common/templates/ca.pem --embed-certs=true --server=https://"{{ k8s_api_public_ip.stdout }}":6443
 
 - name: set credentials
+  changed_when: false
   shell: kubectl config set-credentials admin --client-certificate=roles/common/templates/admin.pem --client-key=roles/common/templates/admin-key.pem
 
 - name: set context
+  changed_when: false
   shell: kubectl config set-context k8s-the-easy-way --cluster=k8s-the-easy-way --user=admin
 
 - name: use context
+  changed_when: false
   shell: kubectl config use-context k8s-the-easy-way
