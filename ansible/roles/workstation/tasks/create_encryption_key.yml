@@ -13,3 +13,4 @@
   template:
     src: roles/workstation/templates/encryption-config_raw.yaml
     dest: roles/workstation/templates/encryption-config.yaml
+  when: encconfig_result.stat.exists == False
