@@ -38,13 +38,11 @@ The Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/dev
 
 You must configure the `ansible/inventory/gce.ini` file for your project, as follows:
 
-* gce.ini
-
-  + __Line 44__: GCE service account e-mail address
-  + __Line 45__: GCE service account private key file (in PEM format)
-    - Line 24 shows how to create a PEM file using the PKCS12 file you can download from Google's IAM console. Basically, you just need to run `openssl pkcs12 -in <path to .p12 file> -passin pass:notasecret -nodes -nocerts | openssl rsa -out <path to output .pem file>`.
-  + __Line 46__: GCE Project ID
-  + __Line 47__: GCE Zone
+  * __Line 44__: GCE service account e-mail address
+  * __Line 45__: GCE service account private key file (in PEM format)
+    + Line 24 shows how to create a PEM file using the PKCS12 file you can download from Google's IAM console. Basically, you just need to run `openssl pkcs12 -in <path to .p12 file> -passin pass:notasecret -nodes -nocerts | openssl rsa -out <path to output .pem file>`.
+  * __Line 46__: GCE Project ID
+  * __Line 47__: GCE Zone
 
 ### Running the playbook
 
