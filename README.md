@@ -98,3 +98,8 @@ worker-2   Ready     2m        v1.7.4
 When you are ready to tear down your Kubernetes cluster, you simply need to run `terraform destroy` from within the `terraform/` folder and type "yes" to confirm.
 
 I have also included a file called `ansible/cleanenv.sh` which will remove the files that get created by the Ansible playbook (e.g. SSL certificates and keys, kubeconfig files, etc.)
+
+## To Do
+
+* Add variables for cluster name and etc, kubernetes component versions
+* Investigate and fix TF compute_route error on initial run (requires a second terraform apply)
