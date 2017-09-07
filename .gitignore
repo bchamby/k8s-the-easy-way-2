@@ -1,0 +1,13 @@
+.terraform
+site.retry
+secrets/
+terraform.tfstate
+terraform.tfstate.backup
+cleanenv.sh
+*.pem
+*.csr
+*.kubeconfig
+ansible/inventory/gce.py
+ansible/inventory/gce.ini
+ansible/roles/workstation/templates/encryption-config.yaml
+.terraform.tfstate.lock.info
