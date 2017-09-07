@@ -69,7 +69,7 @@ You must configure the `gce.ini` file for your project, as follows:
 The Ansible playbook should complete successfully, and have output similar to the following. Also, the playbook was written to be idempotent, so running it additional times should not change anything.
 
 ```
-PLAY RECAP *****************************************************************
+PLAY RECAP **************************************************************************
 controller-0               : ok=7    changed=4    unreachable=0    failed=0
 controller-1               : ok=7    changed=4    unreachable=0    failed=0
 controller-2               : ok=7    changed=4    unreachable=0    failed=0
