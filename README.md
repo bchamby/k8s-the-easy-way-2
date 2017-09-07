@@ -11,7 +11,9 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 * [Ansible](https://github.com/ansible/ansible)
 * [Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
 
-## Terraform / Google Cloud Platform infrastructure Details
+## Terraform / Google Cloud Platform infrastructure
+
+> You will execute the `terraform` binary from within the `terraform` directory (also known as a "root module" in Terraform parlance).
 
 In order to SSH to your compute nodes (for inspection / troubleshooting) you must populate the `terraform/terraform.tfvars` file `gce_ssh_user` and `gce_ssh_public_key_file` variables (point to your public key file).
 
@@ -19,4 +21,6 @@ You must create a `secrets/account.json` file. First, you must create a service 
 
 You can confirm proper functionality by executing `terraform plan` from the terraform (root module) folder. It should say `18 Resources to Add`.
 
-## Ansible Details
+## Ansible
+
+> You will execute the `ansible-playbook` binary from within the `ansible` folder.
