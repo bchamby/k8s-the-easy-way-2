@@ -37,8 +37,8 @@ You must configure the `gce.ini` file for your project.
 
 * gce.ini
 
-  Line 44: GCE service account e-mail address
-  Line 45: GCE service account private key file (in PEM format)
-  * Line 24 shows how to create the PEM file using the PKCS12 you can download from Google's IAM console.
-  Line 46: GCE Project ID
-  Line 47: GCE Zone
+  + Line 44: GCE service account e-mail address
+  + Line 45: GCE service account private key file (in PEM format)
+    - Line 24 shows how to create the PEM file using the PKCS12 you can download from Google's IAM console.
+  + Line 46: GCE Project ID
+  + Line 47: GCE Zone
