@@ -7,6 +7,6 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 ## Dependencies
 
-[Terraform](http://www.terraform.io)
-[Ansible](https://github.com/ansible/ansible)
-[Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
+* [Terraform](http://www.terraform.io)
+* [Ansible](https://github.com/ansible/ansible)
+* [Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
