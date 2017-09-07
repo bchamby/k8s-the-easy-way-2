@@ -19,8 +19,16 @@ In order to SSH to your compute nodes (for inspection / troubleshooting) you mus
 
 You must create a `secrets/account.json` file. First, you must create a service account (call it `terraform`) in the Google Cloud IAM console, and then you can create the associated JSON file which includes your project ID and private key.
 
-You can confirm proper functionality by executing `terraform plan` from the terraform (root module) folder. It should say `18 Resources to Add`.
+You can confirm proper functionality by executing `terraform plan` from the terraform (root module) folder. The output should say `Plan: 18 to add, 0 to change, 0 to destroy.`.
 
 ## Ansible
 
+#### Dynamic Inventory
+
 > You will execute the `ansible-playbook` binary from within the `ansible` folder.
+
+This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. You will need to create a folder called `inventory` and place both the `gce.py` and `gce.ini`
+
+Simply executing `ansible-playbook site.yml -i inventory` from within the `ansible` folder will execute the playbook, which configures your local workstation (for kubectl), and installs the controller (etcd, K8s API server, scheduler, and controller-manager) and worker (kubelet and kube-proxy) components.
+
+The Ansible playbook is broken out into three roles - workstation, controller, and worker.
