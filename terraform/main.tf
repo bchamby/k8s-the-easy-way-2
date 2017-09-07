@@ -34,11 +34,11 @@ resource "google_compute_firewall" "allow-external" {
   network       = "${google_compute_network.k8s-the-easy-way.name}"
   source_ranges = ["0.0.0.0/0"]
   allow {
-    protocol    = "tcp"
-    ports       = ["22", "6443"]
+    protocol = "tcp"
+    ports = ["22", "6443"]
   }
   allow {
-    protocol    = "icmp"
+    protocol = "icmp"
   }
 }
 
@@ -47,8 +47,8 @@ resource "google_compute_firewall" "allow-health-checks" {
   network       = "${google_compute_network.k8s-the-easy-way.name}"
   source_ranges = ["209.85.204.0/22", "209.85.152.0/22", "35.191.0.0/16"]
   allow {
-    protocol    = "tcp"
-    ports       = ["8080"]
+    protocol = "tcp"
+    ports    = ["8080"]
   }
 }
 
@@ -62,21 +62,21 @@ resource "google_compute_instance" "controller" {
   machine_type   = "n1-standard-1"
   zone           = "us-central1-a"
   tags           = ["controller", "controller-${count.index}"]
+  can_ip_forward = true
   boot_disk {
     initialize_params {
-      image      = "ubuntu-os-cloud/ubuntu-1604-lts"
-      size       = 200
+      image = "ubuntu-os-cloud/ubuntu-1604-lts"
+      size  = 200
     }
   }
-  can_ip_forward = true
   network_interface {
-    subnetwork   = "${google_compute_subnetwork.k8s.name}"
-    address      = "10.240.0.${count.index+10}"
+    subnetwork = "${google_compute_subnetwork.k8s.name}"
+    address    = "10.240.0.${count.index+10}"
     access_config {
     }
   }
   metadata {
-    sshKeys      = "${var.gce_ssh_user}:${file(var.gce_ssh_public_key_file)}"
+    sshKeys = "${var.gce_ssh_user}:${file(var.gce_ssh_public_key_file)}"
   }
 
   service_account {
@@ -85,18 +85,18 @@ resource "google_compute_instance" "controller" {
 }
 
 resource "google_compute_instance" "worker" {
-  count        = 3
-  name         = "worker-${count.index}"
-  machine_type = "n1-standard-1"
-  zone         = "us-central1-a"
-  tags         = ["worker", "worker-${count.index}"]
+  count          = 3
+  name           = "worker-${count.index}"
+  machine_type   = "n1-standard-1"
+  zone           = "us-central1-a"
+  tags           = ["worker", "worker-${count.index}"]
+  can_ip_forward = true
   boot_disk {
     initialize_params {
       image = "ubuntu-os-cloud/ubuntu-1604-lts"
       size  = 200
     }
   }
-  can_ip_forward = true
   network_interface {
     subnetwork = "${google_compute_subnetwork.k8s.name}"
     address    = "10.240.0.${count.index+20}"
