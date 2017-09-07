@@ -10,3 +10,4 @@ cleanenv.sh
 gce.py
 gce.ini
 ansible/roles/workstation/templates/encryption-config.yaml
+.terraform.tfstate.lock.info
