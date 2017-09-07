@@ -21,8 +21,8 @@ In order to SSH to your compute nodes (for inspection / troubleshooting purposes
 
 You will notice these variables are referenced in the `terraform/main.tf` module in the google_compute_instance resources. Terraform will automatically create the user in the compute instance and add the public key to the `~/.ssh/authorized_keys` file for you.
 
-* gce_ssh_user (e.g. root or centos)
-* gce_ssh_public_key_file (e.g. ~/.ssh/id_rsa.pub)
+* __gce_ssh_user__ (e.g. root or centos)
+* __gce_ssh_public_key_file__ (e.g. ~/.ssh/id_rsa.pub)
 
 In order for Terraform to authenticate to GCP, you must create a service account (I suggest calling it `terraform`) in the Google Cloud IAM console. Create a key for the service account and download it in JSON format. Save this file as `terraform/secrets/account.json` (overwrite the existing, placeholder file).
 
