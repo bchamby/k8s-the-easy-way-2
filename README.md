@@ -25,7 +25,7 @@ You can confirm proper functionality by executing `terraform plan` from the `ter
 
 ## Ansible
 
-> You will execute the `ansible-playbook` binary from within the `ansible` folder.
+> You will execute the `ansible-playbook` binary from within the `ansible/` folder.
 
 Simply executing `ansible-playbook site.yml -i inventory` from within the `ansible/` folder will execute the playbook, which configures your local workstation (for kubectl), and installs the controller (etcd, K8s API server, scheduler, and controller-manager) and worker (kubelet and kube-proxy) components.
 
@@ -52,7 +52,9 @@ The Ansible playbook is broken out into three roles - workstation, controller, a
 
 ### Dynamic Inventory
 
-This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. You will need to create a folder called `inventory/` which contains both the `gce.py` and `gce.ini` files.
+This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. If you look at the `terraform/main.tf` module, at the `google_compute_instance` resources, you will see a `tag` key with assigned tags. The Ansible dynamic inventory leverages these tags to target controller and worker nodes.
+
+You will need to create a folder called `inventory/` which contains both the `gce.py` and `gce.ini` files.
 
 You must configure the `gce.ini` file for your project, as follows:
 
