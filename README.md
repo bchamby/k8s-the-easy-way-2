@@ -7,6 +7,8 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 ## Dependencies
 
+* [cfssl and cfssljson](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/02-client-tools.md)
+* [kubectl](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/02-client-tools.md)
 * [Terraform](http://www.terraform.io)
 * [Ansible](https://github.com/ansible/ansible)
 * [Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
