@@ -17,7 +17,10 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 > You will execute the `terraform` binary from within the `terraform/` directory (also known as a "root module" in Terraform parlance).
 
-In order to SSH to your compute nodes (for inspection / troubleshooting) you must populate the `terraform/terraform.tfvars` file `gce_ssh_user` and `gce_ssh_public_key_file` variables (point to your public key file).
+In order to SSH to your compute nodes (for inspection / troubleshooting) you must populate the following variables in the `terraform/terraform.tfvars` file.
+
+* gce_ssh_user
+* gce_ssh_public_key_file (point to your public key file, e.g. ~/.ssh/id_rsa.pub)
 
 In order for Terraform to authenticate to GCP, you must create a service account (I suggest calling it `terraform`) in the Google Cloud IAM console. Create a key for the service account and download it in JSON format. Save this file as `terraform/secrets/account.json` (overwrite the existing, placeholder file).
 
