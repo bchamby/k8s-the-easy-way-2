@@ -10,3 +10,9 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 * [Terraform](http://www.terraform.io)
 * [Ansible](https://github.com/ansible/ansible)
 * [Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
+
+## Terraform / Google Cloud Platform infrastructure
+
+In order to SSH to your compute nodes (for inspection / troubleshooting) you must populate the terraform/terraform.tfvars file gce_ssh_user and gce_ssh_public_key_file variables (point to your public key file).
+
+You must create a secrets/account.json file. First, you must create a service account (call it terraform) in the Google Cloud IAM console, and then you can create the associated JSON file which includes your project ID and private key.
