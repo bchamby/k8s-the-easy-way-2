@@ -17,10 +17,10 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 > You will execute the `terraform` binary from within the `terraform/` directory (also known as a "root module" in Terraform parlance).
 
-In order to SSH to your compute nodes (for inspection / troubleshooting) you must populate the following variables in the `terraform/terraform.tfvars` file.
+In order to SSH to your compute nodes (for inspection / troubleshooting purposes) you must populate the following variables in the `terraform/terraform.tfvars` file. You just need to specify the user account you will use for SSH access and its associated public key. You will notice these variables are referenced in the `terraform/main.tf` module in the google_compute_instance resources.
 
-* gce_ssh_user
-* gce_ssh_public_key_file (point to your public key file, e.g. ~/.ssh/id_rsa.pub)
+* gce_ssh_user (e.g. root or centos)
+* gce_ssh_public_key_file (e.g. ~/.ssh/id_rsa.pub)
 
 In order for Terraform to authenticate to GCP, you must create a service account (I suggest calling it `terraform`) in the Google Cloud IAM console. Create a key for the service account and download it in JSON format. Save this file as `terraform/secrets/account.json` (overwrite the existing, placeholder file).
 
@@ -30,7 +30,23 @@ You can confirm proper functionality by executing `terraform plan` from the `ter
 
 > You will execute the `ansible-playbook` binary from within the `ansible/` folder.
 
-Simply executing `ansible-playbook site.yml -i inventory` from within the `ansible/` folder will execute the playbook, which configures your local workstation (for kubectl), and installs the controller (etcd, K8s API server, scheduler, and controller-manager) and worker (kubelet and kube-proxy) components.
+### Dynamic Inventory
+
+The Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. If you look at the `terraform/main.tf` module, at the `google_compute_instance` resources, you will see a `tag` key with assigned tags. The Ansible dynamic inventory leverages these tags to target controller and worker nodes.
+
+You must configure the `ansible/inventory/gce.ini` file for your project, as follows:
+
+* gce.ini
+
+  + __Line 44__: GCE service account e-mail address
+  + __Line 45__: GCE service account private key file (in PEM format)
+    - Line 24 shows how to create a PEM file using the PKCS12 file you can download from Google's IAM console. Basically, you just need to run `openssl pkcs12 -in <path to .p12 file> -passin pass:notasecret -nodes -nocerts | openssl rsa -out <path to output .pem file>`.
+  + __Line 46__: GCE Project ID
+  + __Line 47__: GCE Zone
+
+### Running the playbook
+
+Simply executing `ansible-playbook site.yml -i inventory/` from within the `ansible/` folder will execute the playbook, which configures your local workstation (for kubectl), and installs the controller (etcd, K8s API server, scheduler, and controller-manager) and worker (kubelet and kube-proxy) components.
 
 The Ansible playbook is broken out into three roles - workstation, controller, and worker.
 
@@ -52,20 +68,6 @@ The Ansible playbook is broken out into three roles - workstation, controller, a
 * Distribute SSL certificates and keys to worker nodes
 * Distribute kube-proxy and kubeconfig files to worker nodes
 * Install worker components (cri-o, kubelet, and kube-proxy services)
-
-### Dynamic Inventory
-
-The Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. If you look at the `terraform/main.tf` module, at the `google_compute_instance` resources, you will see a `tag` key with assigned tags. The Ansible dynamic inventory leverages these tags to target controller and worker nodes.
-
-You must configure the `ansible/inventory/gce.ini` file for your project, as follows:
-
-* gce.ini
-
-  + __Line 44__: GCE service account e-mail address
-  + __Line 45__: GCE service account private key file (in PEM format)
-    - Line 24 shows how to create a PEM file using the PKCS12 file you can download from Google's IAM console. Basically, you just need to run `openssl pkcs12 -in <path to .p12 file> -passin pass:notasecret -nodes -nocerts | openssl rsa -out <path to output .pem file>`.
-  + __Line 46__: GCE Project ID
-  + __Line 47__: GCE Zone
 
 ## Validation
 
