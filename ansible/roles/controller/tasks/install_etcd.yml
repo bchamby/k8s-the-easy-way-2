@@ -3,5 +3,7 @@
   stat:
     path: /etc/systemd/system/etcd.service
   register: etcd_installed
-- script: roles/controller/files/etcd.sh
+
+- name: install etcd
+  script: roles/controller/files/etcd.sh
   when: etcd_installed.stat.exists == False

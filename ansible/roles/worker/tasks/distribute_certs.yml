@@ -7,7 +7,7 @@
     group: root
     mode: 0644
   with_items:
-    - roles/common/templates/ca.pem
-    - roles/worker/templates/{{ ansible_hostname }}.pem
-    - roles/worker/templates/{{ ansible_hostname }}-key.pem
+    - roles/common/files/ca.pem
+    - roles/worker/files/{{ ansible_hostname }}.pem
+    - roles/worker/files/{{ ansible_hostname }}-key.pem
   become: true

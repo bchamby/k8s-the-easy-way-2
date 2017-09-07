@@ -7,6 +7,6 @@
     group: root
     mode: 0644
   with_items:
-    - roles/worker/templates/kube-proxy.kubeconfig
-    - roles/worker/templates/{{ ansible_hostname }}.kubeconfig
+    - roles/worker/files/kube-proxy.kubeconfig
+    - roles/worker/files/{{ ansible_hostname }}.kubeconfig
   become: true

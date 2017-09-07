@@ -1,7 +1,9 @@
 ---
-- name: Check whether worker already installed
+- name: Check whether worker components are already installed
   stat:
     path: /etc/systemd/system/kubelet.service
   register: worker_installed
-- script: roles/worker/files/worker.sh
+
+- name: install worker components
+  script: roles/worker/files/worker.sh
   when: worker_installed.stat.exists == False
