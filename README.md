@@ -17,7 +17,9 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 > You will execute the `terraform` binary from within the `terraform/` directory (also known as a "root module" in Terraform parlance).
 
-In order to SSH to your compute nodes (for inspection / troubleshooting purposes) you must populate the following variables in the `terraform/terraform.tfvars` file. You just need to specify the user account you will use for SSH access and its associated public key. You will notice these variables are referenced in the `terraform/main.tf` module in the google_compute_instance resources.
+In order to SSH to your compute nodes (for inspection / troubleshooting purposes) you must populate the following variables in the `terraform/terraform.tfvars` file. You just need to specify the user account you will use for SSH access and its associated public key. If you want to create a new SSH key, look up the `ssh-keygen` command.
+
+You will notice these variables are referenced in the `terraform/main.tf` module in the google_compute_instance resources. Terraform will automatically create the user in the compute instance and add the public key to the `~/.ssh/authorized_keys` file for you.
 
 * gce_ssh_user (e.g. root or centos)
 * gce_ssh_public_key_file (e.g. ~/.ssh/id_rsa.pub)
