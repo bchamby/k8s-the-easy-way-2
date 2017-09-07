@@ -2,3 +2,4 @@
 - include: create_certs.yml
 - include: create_kubeconfig_files.yml
 - include: create_encryption_key.yml
+- include: configure_kubectl.yml

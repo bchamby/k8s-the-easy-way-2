@@ -13,8 +13,3 @@
   hosts: tag_worker
   roles:
     - worker
-
-- name: setup kubectl admin
-  hosts: localhost
-  roles:
-    - admin
