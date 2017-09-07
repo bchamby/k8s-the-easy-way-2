@@ -39,6 +39,6 @@ You must configure the `gce.ini` file for your project.
 
   + Line 44: GCE service account e-mail address
   + Line 45: GCE service account private key file (in PEM format)
-    - Line 24 shows how to create the PEM file using the PKCS12 you can download from Google's IAM console.
+    - Line 24 shows how to create a PEM file using the PKCS12 file you can download from Google's IAM console. Basically, you just need to run `openssl pkcs12 -in <path to .p12 file> -passin pass:notasecret -nodes -nocerts | openssl rsa -out <path to output .pem file>`.
   + Line 46: GCE Project ID
   + Line 47: GCE Zone
