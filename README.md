@@ -31,7 +31,26 @@ Simply executing `ansible-playbook site.yml -i inventory` from within the `ansib
 
 The Ansible playbook is broken out into three roles - workstation, controller, and worker.
 
-#### Dynamic Inventory
+#### Workstation Role
+
+* Create SSL certificates and keys (for CA, admin, workers, kube-proxy, and Kubernetes server)
+* Create encryption key for managing secrets in Kubernetes
+* Create kubeconfig file for local kubectl usage
+
+#### Controller Role
+
+* Distribute SSL certificates and keys to controller nodes
+* Distribute encryption YAML file to controller nodes
+* Install etcd on controller nodes
+* Install Kubernetes control plane (API server, scheduler, and controller-manager services)
+
+#### Worker Role
+
+* Distribute SSL certificates and keys to worker nodes
+* Distribute kube-proxy and kubeconfig files to worker nodes
+* Install worker components (cri-o, kubelet, and kube-proxy services)
+
+### Dynamic Inventory
 
 This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. You will need to create a folder called `inventory/` which contains both the `gce.py` and `gce.ini` files.
 
