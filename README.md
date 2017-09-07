@@ -9,9 +9,9 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 * [cfssl and cfssljson](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/02-client-tools.md)
 * [kubectl](https://github.com/kelseyhightower/kubernetes-the-hard-way/blob/master/docs/02-client-tools.md)
+* [Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
 * [Terraform](http://www.terraform.io)
 * [Ansible](https://github.com/ansible/ansible)
-* [Google Cloud SDK](https://cloud.google.com/sdk/gcloud/)
 
 ## Terraform / Google Cloud Platform infrastructure
 
@@ -33,14 +33,14 @@ The Ansible playbook is broken out into three roles - workstation, controller, a
 
 #### Dynamic Inventory
 
-This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. You will need to create a folder called `inventory` and place both the `gce.py` and `gce.ini`
+This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. You will need to create a folder called `inventory/` which contains both the `gce.py` and `gce.ini` files.
 
-You must configure the `gce.ini` file for your project.
+You must configure the `gce.ini` file for your project, as follows:
 
 * gce.ini
 
-  + Line 44: GCE service account e-mail address
-  + Line 45: GCE service account private key file (in PEM format)
+  + _Line 44_: GCE service account e-mail address
+  + _Line 45_: GCE service account private key file (in PEM format)
     - Line 24 shows how to create a PEM file using the PKCS12 file you can download from Google's IAM console. Basically, you just need to run `openssl pkcs12 -in <path to .p12 file> -passin pass:notasecret -nodes -nocerts | openssl rsa -out <path to output .pem file>`.
-  + Line 46: GCE Project ID
-  + Line 47: GCE Zone
+  + _Line 46_: GCE Project ID
+  + _Line 47_: GCE Zone
