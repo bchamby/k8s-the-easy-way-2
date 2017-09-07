@@ -1,5 +1,5 @@
 ---
-- name: create SSL certs and kubeconfig files
+- name: create SSL certs, kubeconfig files, and configure kubectl locally
   hosts: localhost
   roles:
     - workstation
