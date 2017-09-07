@@ -19,7 +19,7 @@ Kubernetes The Hard Way is a fun project, created by Kelsey Hightower (of Google
 
 In order to SSH to your compute nodes (for inspection / troubleshooting) you must populate the `terraform/terraform.tfvars` file `gce_ssh_user` and `gce_ssh_public_key_file` variables (point to your public key file).
 
-You must create a `secrets/account.json` file. First, you must create a service account (call it `terraform`) in the Google Cloud IAM console, and then you can create the associated JSON file which includes your project ID and private key.
+In order for Terraform to authenticate to GCP, you must create a service account (I suggest calling it `terraform`) in the Google Cloud IAM console. Create a key for the service account and download it in JSON format. Save this file as `terraform/secrets/account.json` (overwrite the existing, placeholder file).
 
 You can confirm proper functionality by executing `terraform plan` from the `terraform/` (root module) folder. The output should say `Plan: 18 to add, 0 to change, 0 to destroy.`.
 
@@ -52,11 +52,9 @@ The Ansible playbook is broken out into three roles - workstation, controller, a
 
 ### Dynamic Inventory
 
-This Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. If you look at the `terraform/main.tf` module, at the `google_compute_instance` resources, you will see a `tag` key with assigned tags. The Ansible dynamic inventory leverages these tags to target controller and worker nodes.
+The Ansible playbook uses a <a href="https://github.com/ansible/ansible/tree/devel/contrib/inventory">GCE dynamic inventory script</a> which obviates the need to manage a static inventory. If you look at the `terraform/main.tf` module, at the `google_compute_instance` resources, you will see a `tag` key with assigned tags. The Ansible dynamic inventory leverages these tags to target controller and worker nodes.
 
-You will need to create a folder called `inventory/` which contains both the `gce.py` and `gce.ini` files.
-
-You must configure the `gce.ini` file for your project, as follows:
+You must configure the `ansible/inventory/gce.ini` file for your project, as follows:
 
 * gce.ini
 
