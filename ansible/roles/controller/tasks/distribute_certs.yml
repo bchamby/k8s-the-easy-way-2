@@ -7,8 +7,8 @@
     group: root
     mode: 0644
   with_items:
-    - roles/common/files/ca.pem
-    - roles/common/files/ca-key.pem
+    - roles/workstation/files/ca.pem
+    - roles/workstation/files/ca-key.pem
     - roles/controller/files/kubernetes.pem
     - roles/controller/files/kubernetes-key.pem
   become: true

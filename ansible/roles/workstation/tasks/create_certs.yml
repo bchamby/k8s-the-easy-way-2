@@ -1,19 +1,19 @@
 - name: check whether CA cert and key already exist
   stat:
-    path: roles/common/files/ca.pem
+    path: roles/workstation/files/ca.pem
   register: ca_result
 
 - name: run command to generate CA cert and key
-  shell: cfssl gencert -initca roles/workstation/files/ca-csr.json | cfssljson -bare roles/common/files/ca
+  shell: cfssl gencert -initca roles/workstation/files/ca-csr.json | cfssljson -bare roles/workstation/files/ca
   when: ca_result.stat.exists == False
 
 - name: check whether admin cert and key already exist
   stat:
-    path: roles/common/files/admin.pem
+    path: roles/workstation/files/admin.pem
   register: admin_result
 
 - name: run command to generate admin cert and key
-  shell: cfssl gencert -ca=roles/common/files/ca.pem -ca-key=roles/common/files/ca-key.pem -config=roles/workstation/files/ca-config.json -profile=kubernetes roles/workstation/files/admin-csr.json | cfssljson -bare roles/common/files/admin
+  shell: cfssl gencert -ca=roles/workstation/files/ca.pem -ca-key=roles/workstation/files/ca-key.pem -config=roles/workstation/files/ca-config.json -profile=kubernetes roles/workstation/files/admin-csr.json | cfssljson -bare roles/workstation/files/admin
   when: admin_result.stat.exists == False
 
 - name: get worker external IPs
@@ -40,7 +40,7 @@
   register: worker_result
 
 - name: run command to generate worker certs and keys
-  shell: cfssl gencert -ca=roles/common/files/ca.pem -ca-key=roles/common/files/ca-key.pem -config=roles/workstation/files/ca-config.json -hostname="{{ item.name }}","{{ item.extip }}","{{ item.intip }}" -profile=kubernetes roles/workstation/files/"{{ item.name }}"-csr.json | cfssljson -bare roles/worker/files/"{{ item.name }}"
+  shell: cfssl gencert -ca=roles/workstation/files/ca.pem -ca-key=roles/workstation/files/ca-key.pem -config=roles/workstation/files/ca-config.json -hostname="{{ item.name }}","{{ item.extip }}","{{ item.intip }}" -profile=kubernetes roles/workstation/files/"{{ item.name }}"-csr.json | cfssljson -bare roles/worker/files/"{{ item.name }}"
   when: worker_result.stat.exists == False
   with_items:
     - {"name": "worker-0", "extip": "worker_external_ips[0].results.stdout", "intip": "worker_internal_ips[0].results.stdout"}
@@ -53,7 +53,7 @@
   register: kubeproxy_result
 
 - name: run command to generate kube-proxy cert and key
-  shell: cfssl gencert -ca=roles/common/files/ca.pem -ca-key=roles/common/files/ca-key.pem -config=roles/workstation/files/ca-config.json -profile=kubernetes roles/workstation/files/kube-proxy-csr.json | cfssljson -bare roles/worker/files/kube-proxy
+  shell: cfssl gencert -ca=roles/workstation/files/ca.pem -ca-key=roles/workstation/files/ca-key.pem -config=roles/workstation/files/ca-config.json -profile=kubernetes roles/workstation/files/kube-proxy-csr.json | cfssljson -bare roles/worker/files/kube-proxy
   when: kubeproxy_result.stat.exists == False
 
 - name: get public static IP address for API server
@@ -67,5 +67,5 @@
   register: kubernetes_result
 
 - name: run command to generate kubernetes cert and key
-  shell: cfssl gencert -ca=roles/common/files/ca.pem -ca-key=roles/common/files/ca-key.pem -config=roles/workstation/files/ca-config.json -hostname=10.32.0.1,10.240.0.10,10.240.0.11,10.240.0.12,"{{ k8s_api_public_ip.stdout }}",127.0.0.1,kubernetes.default -profile=kubernetes roles/workstation/files/kubernetes-csr.json | cfssljson -bare roles/controller/files/kubernetes
+  shell: cfssl gencert -ca=roles/workstation/files/ca.pem -ca-key=roles/workstation/files/ca-key.pem -config=roles/workstation/files/ca-config.json -hostname=10.32.0.1,10.240.0.10,10.240.0.11,10.240.0.12,"{{ k8s_api_public_ip.stdout }}",127.0.0.1,kubernetes.default -profile=kubernetes roles/workstation/files/kubernetes-csr.json | cfssljson -bare roles/controller/files/kubernetes
   when: kubernetes_result.stat.exists == False
