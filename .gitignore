@@ -3,7 +3,6 @@ site.retry
 terraform/secrets/
 terraform.tfstate
 terraform.tfstate.backup
-cleanenv.sh
 *.pem
 *.csr
 *.kubeconfig
