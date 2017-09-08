@@ -1,7 +1,7 @@
 provider "google" {
   credentials = "${file("secrets/account.json")}"
-  project     = "k8s-the-easy-way-2"
-  region      = "us-central1"
+  project     = "${var.google_project_id}"
+  region      = "${var.google_region}"
 }
 
 resource "google_compute_network" "k8s-the-easy-way" {
