@@ -4,6 +4,15 @@
     path: /etc/systemd/system/etcd.service
   register: etcd_installed
 
+# - name: display etcd version
+#   debug:
+#     msg: "etcd version is {{ etcd_version }}"
+
+- name: create etcd.sh file
+  template:
+    src: roles/controller/templates/etcd.sh
+    dest: /var/tmp/etcd.sh
+
 - name: install etcd
-  script: roles/controller/files/etcd.sh
+  command: sh /var/tmp/etcd.sh
   when: etcd_installed.stat.exists == False

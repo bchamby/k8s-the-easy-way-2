@@ -7,7 +7,9 @@
 - name: configure controller nodes
   hosts: tag_controller
   roles:
-    - controller
+    - role: controller
+      etcd_version: 3.2.6
+      kubernetes_version: 1.7.4
 
 - name: configure worker nodes
   hosts: tag_worker

@@ -4,6 +4,15 @@
     path: /etc/systemd/system/kube-apiserver.service
   register: controlplane_installed
 
+# - name: display kubernetes version
+#   debug:
+#     msg: "Kubernetes version is {{ kubernetes_version }}"
+
+- name: create controller.sh template
+  template:
+    src: roles/controller/templates/controller.sh
+    dest: /var/tmp/controller.sh
+
 - name: Install control plane
-  script: roles/controller/files/controller.sh
+  command: sh /var/tmp/controller.sh
   when: controlplane_installed.stat.exists == False
