@@ -10,7 +10,7 @@
 
 - name: create etcd.sh file
   template:
-    src: roles/controller/templates/etcd.sh
+    src: roles/controller/templates/etcd.sh.j2
     dest: /var/tmp/etcd.sh
 
 - name: install etcd

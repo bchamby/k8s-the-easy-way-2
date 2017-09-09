@@ -4,6 +4,11 @@
     path: /etc/systemd/system/kubelet.service
   register: worker_installed
 
+- name: create worker.sh file
+  template:
+    src: roles/worker/templates/worker.sh.j2
+    dest: /var/tmp/worker.sh
+
 - name: install worker components
-  script: roles/worker/files/worker.sh
+  command: sh /var/tmp/worker.sh
   when: worker_installed.stat.exists == False

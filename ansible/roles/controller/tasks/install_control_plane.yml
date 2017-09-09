@@ -10,7 +10,7 @@
 
 - name: create controller.sh template
   template:
-    src: roles/controller/templates/controller.sh
+    src: roles/controller/templates/controller.sh.j2
     dest: /var/tmp/controller.sh
 
 - name: Install control plane
