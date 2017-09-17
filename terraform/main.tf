@@ -149,3 +149,23 @@ resource "google_compute_route" "k8s-route" {
   next_hop_ip = "10.240.0.2${count.index}"
   priority    = 1000
 }
+
+output "apiserver_ip" {
+  value = "${google_compute_address.k8s-the-easy-way.address}"
+}
+
+output "controller_intips" {
+  value = "${join(",",google_compute_instance.controller.*.network_interface.0.address)}"
+}
+
+output "controller_extips" {
+  value = "${join(",",google_compute_instance.controller.*.network_interface.0.access_config.0.assigned_nat_ip)}"
+}
+
+output "worker_intips" {
+  value = "${join(",",google_compute_instance.worker.*.network_interface.0.address)}"
+}
+
+output "worker_extips" {
+  value = "${join(",",google_compute_instance.worker.*.network_interface.0.access_config.0.assigned_nat_ip)}"
+}
