@@ -1,8 +1,4 @@
 ---
-- name: Check whether control plane is already installed
-  stat:
-    path: /etc/systemd/system/kube-apiserver.service
-  register: controlplane_installed
 
 # - name: display kubernetes version
 #   debug:
@@ -15,4 +11,5 @@
 
 - name: Install control plane
   command: sh /var/tmp/controller.sh
-  when: controlplane_installed.stat.exists == False
+  args:
+    creates: /etc/systemd/system/kube-apiserver.service
