@@ -1,9 +1,4 @@
 ---
-- name: Check whether etcd is already installed
-  stat:
-    path: /etc/systemd/system/etcd.service
-  register: etcd_installed
-
 # - name: display etcd version
 #   debug:
 #     msg: "etcd version is {{ etcd_version }}"
@@ -15,4 +10,5 @@
 
 - name: install etcd
   command: sh /var/tmp/etcd.sh
-  when: etcd_installed.stat.exists == False
+  args:
+    creates: /etc/systemd/system/etcd.service

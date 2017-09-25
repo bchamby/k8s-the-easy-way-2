@@ -1,9 +1,4 @@
 ---
-- name: Check whether worker components are already installed
-  stat:
-    path: /etc/systemd/system/kubelet.service
-  register: worker_installed
-
 - name: create worker.sh file
   template:
     src: roles/worker/templates/worker.sh.j2
@@ -11,4 +6,5 @@
 
 - name: install worker components
   command: sh /var/tmp/worker.sh
-  when: worker_installed.stat.exists == False
+  args:
+    creates: /etc/systemd/system/kubelet.service
