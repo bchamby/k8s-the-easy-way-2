@@ -6,16 +6,16 @@
 
 - name: generate kubeconfig file
   changed_when: false
-  shell: kubectl config set-cluster k8s-the-easy-way --certificate-authority=roles/workstation/files/ca.pem --embed-certs=true --server=https://"{{ k8s_api_public_ip.stdout }}":6443
+  command: kubectl config set-cluster k8s-the-easy-way --certificate-authority=roles/workstation/files/ca.pem --embed-certs=true --server=https://"{{ k8s_api_public_ip.stdout }}":6443
 
 - name: set credentials
   changed_when: false
-  shell: kubectl config set-credentials admin --client-certificate=roles/workstation/files/admin.pem --client-key=roles/workstation/files/admin-key.pem
+  command: kubectl config set-credentials admin --client-certificate=roles/workstation/files/admin.pem --client-key=roles/workstation/files/admin-key.pem
 
 - name: set context
   changed_when: false
-  shell: kubectl config set-context k8s-the-easy-way --cluster=k8s-the-easy-way --user=admin
+  command: kubectl config set-context k8s-the-easy-way --cluster=k8s-the-easy-way --user=admin
 
 - name: use context
   changed_when: false
-  shell: kubectl config use-context k8s-the-easy-way
+  command: kubectl config use-context k8s-the-easy-way

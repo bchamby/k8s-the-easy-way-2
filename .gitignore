@@ -9,3 +9,9 @@ terraform.tfstate.backup
 ansible/inventory/
 ansible/roles/workstation/templates/encryption-config.yaml
 .terraform.tfstate.lock.info
+.kitchen/
+.kitchen.local.yml
+Gemfile.lock
+vendor/
+.bundle/
+.DS_Store
