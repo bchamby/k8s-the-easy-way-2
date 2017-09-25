@@ -1,3 +1,4 @@
+---
 - name: run command to generate CA cert and key
   shell: cfssl gencert -initca roles/workstation/files/ca-csr.json | cfssljson -bare roles/workstation/files/ca
   args:
